@@ -16,7 +16,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     private final CloudWatchService cloudWatchService;
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(myHandler(), "/api/monitor").setAllowedOrigins("*");
+        registry.addHandler(myHandler(), "/api/cloudwatch").setAllowedOrigins("*");
     }
     @Bean
     public WebSocketHandler myHandler() {

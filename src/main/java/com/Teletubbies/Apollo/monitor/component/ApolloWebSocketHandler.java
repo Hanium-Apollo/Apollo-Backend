@@ -41,7 +41,7 @@ public class ApolloWebSocketHandler extends TextWebSocketHandler {
         sessions.add(session);
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 1000 * 60)
     public void sendDataToAll() throws IOException {
         for (WebSocketSession session: sessions) {
             if (session.isOpen()) {
