@@ -14,8 +14,6 @@ import com.Teletubbies.Apollo.deploy.dto.request.PostClientDeployRequest;
 import com.Teletubbies.Apollo.deploy.dto.response.PostClientDeployResponse;
 import com.Teletubbies.Apollo.deploy.exception.DeploymentException;
 import com.Teletubbies.Apollo.deploy.repository.AwsServiceRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,9 +33,6 @@ public class AWSCloudFormationClientService {
     private final AwsServiceRepository awsServiceRepository;
     private final UserService userService;
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     public AWSCloudFormationClientService(AwsClientComponent awsClientComponent, RepoRepository repoRepository, CredentialRepository credentialRepository, AwsServiceRepository awsServiceRepository, UserService userService) {
         this.awsClientComponent = awsClientComponent;
         this.repoRepository = repoRepository;
@@ -52,8 +47,6 @@ public class AWSCloudFormationClientService {
         String repoName = request.getRepoName();
         String EndPoint = createClientStack(cfClient, repoName);
         ApolloUser user = userService.getUserById(userId);
-//        Repo repo = repoRepository.findByRepoName(repoName)
-//                .orElseThrow(() -> new DeploymentException(NOT_FOUND_REPO_ERROR, "해당 레포가 존재하지 않습니다."));
         ApolloDeployService apolloDeployService =
                 new ApolloDeployService(user, repoName, EndPoint, "client");
         awsServiceRepository.save(apolloDeployService);
